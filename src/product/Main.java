@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -20,18 +21,34 @@ public class Main {
 
 	
 	
-	Map<String,String> shopify = new HashMap();
+	static Map<String,String> shopifyUpdates = new HashMap();
 	
 	private final String USER_AGENT = "Mozilla/5.0";
 
 	public static void main(String[] args) throws Exception {
-		Main http = new Main();
-
-		System.out.println("Testing 1 - Send Http GET request");
-		http.getAsJson();
+		ShopifyProducts shopifyProducts = new ShopifyProducts();
+		Map<String,String> shopifyProds = shopifyProducts.getProducts();
+		
+		ReadShopCSV shopCsv = new ReadShopCSV();
+		Map<String,String> shopProds = shopCsv.getShopProducts();
+		
+		//compare prices of each product map
+		for(Entry entry: shopifyProds.entrySet()) {
+			String productId = (String)entry.getKey();//
+			if(shopProds.containsKey(productId)) {
+				String price = (String)entry.getValue();
+				String updatePrice = shopProds.get(productId);
+				if(!price.equals(updatePrice)) {
+     				shopifyUpdates.put(productId, updatePrice);
+     				System.out.println("Shopify price:" + price + ", shop price: " + updatePrice);
+     				System.out.println("Number of product updates:" + shopifyUpdates.size());
+				}
+			}
+		}
 	}
 
-	// HTTP POST request
+	//TODO 
+	///Make update call for each product in list
 	private void sendPost() throws Exception {
 
 		String url = "";

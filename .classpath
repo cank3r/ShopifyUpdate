@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="dependencies_jar/httpcore-4.3.3.jar"/>
 	<classpathentry kind="lib" path="dependencies_jar/httpmime-4.3.6.jar"/>
 	<classpathentry kind="lib" path="dependencies_jar/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="dependencies_jar/logback-1.1.2/logback-classic-1.1.2.jar"/>
+	<classpathentry kind="lib" path="dependencies_jar/logback-1.1.2/logback-core-1.1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
