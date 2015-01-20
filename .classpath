@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="dependencies_jar/commons-io-2.4.jar"/>
 	<classpathentry kind="lib" path="dependencies_jar/logback-1.1.2/logback-classic-1.1.2.jar"/>
 	<classpathentry kind="lib" path="dependencies_jar/logback-1.1.2/logback-core-1.1.2.jar"/>
+	<classpathentry kind="lib" path="dependencies_jar/slf4j-1.7.10/slf4j-api-1.7.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

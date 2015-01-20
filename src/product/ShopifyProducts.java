@@ -23,9 +23,9 @@ public class ShopifyProducts {
 	String path = "admin/products.json";
 
 	String shopifyUrl = "https://" + key + user + path;
-	Map<String, String> products = new HashMap();
+	Map<String, Map<String, String>> products = new HashMap();
 
-	protected Map<String, String> getProducts() throws Exception {
+	protected Map<String, Map<String,String>> getProducts() throws Exception {
 		if(products.isEmpty()) {
 			getProductJson();
 		}
@@ -57,10 +57,14 @@ public class ShopifyProducts {
             	JsonElement variant = (JsonElement)varIt.next();
             	JsonElement price = variant.getAsJsonObject().get("price");
             	JsonElement sku = variant.getAsJsonObject().get("sku");
+            	JsonElement quantity = variant.getAsJsonObject().get("inventory_quantity");
             	String priceStr = price.getAsString();
             	String skuStr = sku.getAsString();
-            	System.out.println(priceStr + " , " + skuStr);
-            	products.put(skuStr, priceStr);
+            	String quantityStr = quantity.getAsString();
+            	Map<String,String> data = new HashMap();
+            	data.put("price", priceStr);
+            	data.put("quantity", quantityStr);
+            	products.put(skuStr, data);
             }
 		}
 	}
@@ -80,6 +84,20 @@ public class ShopifyProducts {
 		return inputStream;
 	}
 
+
+	private void updateProducts() throws Exception {
+
+		HttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(shopifyUrl);
+
+		HttpResponse response = client.execute(request);
+
+		System.out.println("\nSending 'GET' request to URL : " + shopifyUrl);
+		System.out.println("Response Code : "
+				+ response.getStatusLine().getStatusCode());
+
+		
+	}
 
 	private void populateProducts() {
 
