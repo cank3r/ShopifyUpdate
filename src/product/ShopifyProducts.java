@@ -192,8 +192,8 @@ public class ShopifyProducts {
 			HttpPut request = new HttpPut(variantUrl);
 			request.setHeader("Content-Type", "application/json");
 
-			//updatePrice(request, variantId, price);
-			//updateQuantity(request, variantId, quantity);
+			updatePrice(request, variantId, price);
+			updateQuantity(request, variantId, quantity);
 		}
 	}
 

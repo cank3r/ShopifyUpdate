@@ -1,5 +1,7 @@
-/bin
-/products.json
-/productUpdate.csv
+bin/
+products.json
+productUpdate.csv
 /shop_update.log
+.settings/
 .classpath
+.project
