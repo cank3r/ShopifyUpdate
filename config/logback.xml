@@ -11,19 +11,19 @@
 
 	<!-- Send debug messages to a file at "c:/jcg.log" -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/home/tom/logs/shop_update.log</file>
+		<file>shop_update.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
 		</encoder>
  
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<FileNamePattern>/home/tom/logs/shop_update.%i.log.zip</FileNamePattern>
+			<FileNamePattern>shop_update.%i.log.zip</FileNamePattern>
 			<MinIndex>1</MinIndex>
 			<MaxIndex>10</MaxIndex>
 		</rollingPolicy>
  
 		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<MaxFileSize>2MB</MaxFileSize>
+			<MaxFileSize>4MB</MaxFileSize>
 		</triggeringPolicy>
 	</appender>
 

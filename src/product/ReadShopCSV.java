@@ -7,7 +7,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonObject;
+
 public class ReadShopCSV {
+    static Logger logger = LoggerFactory.getLogger(ReadShopCSV.class.getName());
 
 	Map<String, String> products = new HashMap();
 
@@ -40,8 +46,13 @@ public class ReadShopCSV {
 				if(product.length == 3) {
 				    int len = product[2].length();
 				    String price = product[2].substring(0, len-2);
-				    System.out.println("Product [id= " + product[0] + " , price=" + price + "]");
-				    products.put(product[0], price);//id , price
+				    String quantity = product[1];
+				    //System.out.println("Product [id= " + product[0] + " , price=" + price + "]");
+				    logger.info("Product id={}, price={}, quantity={}", product[0], price, quantity);
+				    JsonObject composite = new JsonObject();
+				    composite.addProperty("price", price);
+				    composite.addProperty("quantity", quantity);
+				    products.put(product[0], composite.toString());//id , price
 				}
 			}
 

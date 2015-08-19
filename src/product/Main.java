@@ -7,6 +7,9 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 /*
  * Gets all product skus and prices from shopify
  * Reads all local shop product id and prices
@@ -38,15 +41,19 @@ public class Main {
 				String vid = (String)data.get("variantId");
 				String price = (String)data.get("price");
 				String quantity = (String)data.get("quantity");
-				String updatePrice = shopProds.get(productId);
-				if(!price.equals(updatePrice)) {
+				JsonParser parser = new JsonParser();
+				JsonObject update = (JsonObject)parser.parse(shopProds.get(productId));
+				String updatePrice = update.get("price").getAsString();
+				String updateQuantity = update.get("quantity").getAsString();
+				if(!price.equals(updatePrice) || !quantity.equals(updateQuantity)) {
 					Map<String,String> updateData = new HashMap();
 					updateData.put("variantId", vid);
 					updateData.put("price", updatePrice);
-					updateData.put("quantity", quantity);
+					updateData.put("quantity", updateQuantity);
      				shopifyUpdates.put(productId, updateData);
-                    logger.info("Shopify price {} : Physical Shop price {} ", price, updatePrice);
                     logger.info("Shopify product id {} - data {}", productId, updateData.toString());
+                    logger.info("Shopify price {} : Physical Shop price {} ", price, updatePrice);
+                    logger.info("Shopify quantity {} : Physical Shop quantity {} ", quantity, updateQuantity);
 				}
 				//TODO also need to do an update based on quantity comparision
 			}
