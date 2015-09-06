@@ -185,6 +185,8 @@ public class ShopifyProducts {
 			String variantId = data.get("variantId");
 			String price = data.get("price");
 			String quantity = data.get("quantity");
+			String isPriceUpdate = data.get("isPriceUpdate");
+			String isQuantityUpdate = data.get("isQuantityUpdate");
 			String variantUrl = shopifyUrl + variantPath + "/" + variantId
 					+ ".json";
 
@@ -192,8 +194,12 @@ public class ShopifyProducts {
 			HttpPut request = new HttpPut(variantUrl);
 			request.setHeader("Content-Type", "application/json");
 
-			updatePrice(request, variantId, price);
-			updateQuantity(request, variantId, quantity);
+			if(isPriceUpdate.equals("true")) {
+                updatePrice(request, variantId, price);
+			}
+			if(isQuantityUpdate.equals("true")) {
+                updateQuantity(request, variantId, quantity);
+			}
 		}
 	}
 
@@ -214,8 +220,7 @@ public class ShopifyProducts {
 	private void updateQuantity(HttpPut request, String variantId,
 			String quantity) throws Exception {
 		String json = "{\"variant\": {\"id\": \"" + variantId
-				+ "\", \"inventory_quantity\":\"" + quantity
-				+ "\",\"old_inventory_quantity\":\"" + quantity + "\" } }";
+				+ "\",\"inventory_quantity\":\"" + quantity + "\" } }";
 		StringEntity entity = new StringEntity(json);
 		request.setEntity(entity);
 		HttpResponse response = client.execute(request);

@@ -45,11 +45,15 @@ public class Main {
 				JsonObject update = (JsonObject)parser.parse(shopProds.get(productId));
 				String updatePrice = update.get("price").getAsString();
 				String updateQuantity = update.get("quantity").getAsString();
-				if(!price.equals(updatePrice) || !quantity.equals(updateQuantity)) {
+				boolean isPriceUpdate = !price.equals(updatePrice);
+				boolean isQuantityUpdate = !quantity.equals(updateQuantity);
+				if(isPriceUpdate || isQuantityUpdate) {
 					Map<String,String> updateData = new HashMap();
 					updateData.put("variantId", vid);
 					updateData.put("price", updatePrice);
 					updateData.put("quantity", updateQuantity);
+					updateData.put("isPriceUpdate", String.valueOf(isPriceUpdate));
+					updateData.put("isQuantityUpdate", String.valueOf(isQuantityUpdate));
      				shopifyUpdates.put(productId, updateData);
                     logger.info("Shopify product id {} - data {}", productId, updateData.toString());
                     logger.info("Shopify price {} : Physical Shop price {} ", price, updatePrice);
